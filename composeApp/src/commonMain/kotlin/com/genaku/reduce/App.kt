@@ -35,13 +35,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
+import com.genaku.reduce.sms.SmsScreen
+import com.genaku.reduce.station.StationScreen
 import com.genaku.reduce.theme.AppTheme
 import com.genaku.reduce.theme.LocalThemeIsDark
+import com.genaku.reduce.traffic.TrafficScreen
 
 @Composable
 internal fun App() {
     Navigator(
-        screen = TrafficScreen(),
+        screen = HomeScreen(),
         onBackPressed = { currentScreen ->
             println("Navigator: Pop screen $currentScreen")
             true

@@ -1,4 +1,4 @@
-# Compose Multiplatform Application
+# Compose Multiplatform Application. Sample of Reduce_kmp lib using (https://github.com/genaku/Reduce_kmp)
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)

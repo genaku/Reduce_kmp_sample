@@ -1,43 +1,13 @@
 package com.genaku.reduce.traffic
 
-import com.genaku.reduce.*
+import com.genaku.reduce.SuspendSideEffect
+import com.genaku.reduce.suspendKnot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
-sealed class StreetState : State {
-    object Empty : StreetState()
-    class Traffic(val cars: Int) : StreetState()
-
-    operator fun plus(cars: Int): StreetState = when (this) {
-        Empty -> Traffic(cars)
-        is Traffic -> Traffic(this.cars + cars)
-    }
-
-    operator fun minus(cars: Int): StreetState = when (this) {
-        Empty -> this
-        is Traffic -> {
-            val newCars = this.cars - cars
-            if (newCars > 0) Traffic(newCars) else Empty
-        }
-    }
-
-    val value: Int
-        get() = when (this) {
-            Empty -> 0
-            is Traffic -> this.cars
-        }
-
-    override fun toString(): String = value.toString()
-}
-
-sealed class StreetIntent : StateIntent {
-    data object Plus : StreetIntent()
-    data object Minus : StreetIntent()
-}
-
 class Street(private val delay: Long) {
 
-    private var trafficLight: TrafficLight? = null
+    private var _trafficLight: TrafficLight? = null
 
     private val knot = suspendKnot<StreetState, StreetIntent> {
         initialState = StreetState.Empty
@@ -58,7 +28,7 @@ class Street(private val delay: Long) {
 
     private fun outStreet(): SuspendSideEffect<StreetIntent> = SuspendSideEffect {
         delay(delay)
-        trafficLight?.addCar()
+        _trafficLight?.addCar()
         null
     }
 
@@ -70,7 +40,7 @@ class Street(private val delay: Long) {
     }
 
     fun setTrafficLight(trafficLight: TrafficLight) {
-        this.trafficLight = trafficLight
+        _trafficLight = trafficLight
     }
 
     fun carIn() {

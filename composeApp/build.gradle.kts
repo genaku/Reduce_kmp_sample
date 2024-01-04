@@ -48,7 +48,7 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)
             implementation(libs.kotlinx.coroutines.core)
-            implementation("io.github.genaku.reduce:reduce:1.0")
+            implementation(libs.reduce)
         }
 
         commonTest.dependencies {
